@@ -1,17 +1,21 @@
 version: 2.1
 
 jobs:
-  echo:
+  my_job:
     docker:
       - image: cimg/base:stable
     steps:
       - run:
-          name: Greet
-          command: echo "I love ${COLOR} builds."
-          environment:
-            COLOR: "green"
+          name: check
+          command: |
+            echo "This is triggered from changes in branch: ${CIRCLE_BRANCH}"
 
 workflows:
-  main:
+  my_workflow:
     jobs:
-      - echo
+      - my_job:
+          filters:
+            branches:
+              only:
+                - /nw-.*/
+                - main
